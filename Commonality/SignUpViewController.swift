@@ -1,5 +1,5 @@
 //
-//  LoginViewController.swift
+//  SignUpViewController.swift
 //  Commonality
 //
 //  Created by Chris Rodriguez on 12/16/19.
@@ -8,46 +8,55 @@
 
 import UIKit
 
-class LoginViewController: UIViewController, UITextFieldDelegate {
+class SignUpViewController: UIViewController, UITextFieldDelegate {
     
     @IBOutlet weak var emailTextField: UITextField!
-    @IBOutlet weak var passwordTextField: UITextField!
-    @IBOutlet weak var loginButton: UIButton!
+    @IBOutlet weak var firstPasswordTextField: UITextField!
+    @IBOutlet weak var secondPasswordTextField: UITextField!
+    @IBOutlet weak var signUpButton: UIButton!
     
-    
-    @IBAction func loginTapped(_ sender: Any) {
-        attemptLogin()
+    @IBAction func signUpTapped(_ sender: Any) {
+        attemptSignUp()
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+
         self.emailTextField.delegate = self
-        self.passwordTextField.delegate = self
+        self.firstPasswordTextField.delegate = self
+        self.secondPasswordTextField.delegate = self
         
         // Apply styles to buttons and fields.
         emailTextField.setBottomBorder()
-        passwordTextField.setBottomBorder()
-        loginButton.applyDesign()
-        passwordTextField.returnKeyType = UIReturnKeyType.go
+        firstPasswordTextField.setBottomBorder()
+        secondPasswordTextField.setBottomBorder()
+        signUpButton.applyDesign()
+        secondPasswordTextField.returnKeyType = UIReturnKeyType.go
     }
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         // If the user taps enter, attempt login and resign keyboard.
         textField.resignFirstResponder()
-        attemptLogin()
+        attemptSignUp()
         return true
     }
 
-    func attemptLogin() {
+    func attemptSignUp() {
         // Only send request if there's something in the text fields.
-        if let usernameText = emailTextField.text, !usernameText.isEmpty, let passText = passwordTextField.text, !passText.isEmpty {
+        if let emailText = emailTextField.text, !emailText.isEmpty, let firstPass = firstPasswordTextField.text, !firstPass.isEmpty,
+            let secondPass = secondPasswordTextField.text, !secondPass.isEmpty {
             
-            self.loginButton.loadingIndicator(true, "");
+            // But first check that the two entered passwords are the same.
+            if (secondPass != firstPass) {
+                showAlert(title: "Oops...", message: "Passwords don't match.", view: self)
+                return
+            }
             
-            let params = ["email": usernameText.trim(), "password": passText] as Dictionary<String, String>
+            // Attempt the sign up.
+            self.signUpButton.loadingIndicator(true, "");
+            let params = ["email": emailText.trim(), "password": firstPass] as Dictionary<String, String>
 
-            var request = URLRequest(url: URL(string: "http://192.168.1.195:3313/twitter/api/users/login")!)
+            var request = URLRequest(url: URL(string: "http://192.168.1.195:3313/twitter/api/users/register")!)
             request.httpMethod = "POST"
             request.httpBody = try? JSONSerialization.data(withJSONObject: params, options: [])
             request.addValue("application/json", forHTTPHeaderField: "Content-Type")
@@ -55,12 +64,10 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
             let session = URLSession.shared
             let task = session.dataTask(with: request, completionHandler: { data, response, error -> Void in
                 do {
-                    var json = try JSONSerialization.jsonObject(with: data!) as! Dictionary<String, AnyObject>
-                    json["email"] = usernameText as AnyObject
-                    
+                    let json = try JSONSerialization.jsonObject(with: data!) as! Dictionary<String, AnyObject>
                     let statusCode = json["resultCode"] as! Int
                     switch statusCode {
-                    case 120:
+                    case 110:
                         self.completion(json: json)
                         break
                     default:
@@ -80,20 +87,17 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         }
     }
     
+    // If successful signup.
     func completion(json: Dictionary<String, AnyObject>) {
         DispatchQueue.main.async(){
-            // Save the credentials for future authentication.
-            let defaults = UserDefaults.standard
-            defaults.set(json["sessionID"] as! String, forKey: defaultsKeys.sessionID)
-            defaults.set(json["email"] as! String, forKey: defaultsKeys.userEmail)
-            
-            self.performSegue(withIdentifier: "loggedIn", sender: self)
+           self.performSegue(withIdentifier: "toUsernameSelection", sender: self)
         }
     }
     
+    // If signup is unsuccessful.
     func errorHandler(message: String) {
         DispatchQueue.main.async(){
-            self.loginButton.loadingIndicator(false, "Login")
+            self.signUpButton.loadingIndicator(false,  "Sign Up")
             showAlert(title: "Oops...", message: message, view: self)
         }
     }

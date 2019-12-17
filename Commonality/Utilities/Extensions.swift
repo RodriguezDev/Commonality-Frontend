@@ -37,7 +37,7 @@ extension UIButton {
         self.layer.cornerRadius = self.frame.height / 2 // Rounds corners completely.
         self.clipsToBounds = true
     }
-    func loadingIndicator(_ show: Bool) {
+    func loadingIndicator(_ show: Bool, _ title: String) {
         let tag = 808404
         if show {
             self.isEnabled = false
@@ -48,13 +48,13 @@ extension UIButton {
             let buttonWidth = self.bounds.size.width
             indicator.center = CGPoint(x: buttonWidth/2, y: buttonHeight/2)
             indicator.tag = tag
-            indicator.color = UIColor.black
+            indicator.color = UIColor(named: "ButtonColor")
             self.addSubview(indicator)
             indicator.startAnimating()
         } else {
             self.isEnabled = true
             self.alpha = 1.0
-            self.setTitle("Login", for: .normal)
+            self.setTitle(title, for: .normal)
             if let indicator = self.viewWithTag(tag) as? UIActivityIndicatorView {
                 indicator.stopAnimating()
                 indicator.removeFromSuperview()
@@ -156,4 +156,10 @@ class ImagePickerManager: NSObject, UIImagePickerControllerDelegate, UINavigatio
     
     
     
+}
+
+func showAlert(title: String, message: String, view: UIViewController) {
+    let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
+    alert.addAction(UIAlertAction(title: "Okay", style: .default, handler: nil))
+    view.present(alert, animated: true, completion: nil)
 }

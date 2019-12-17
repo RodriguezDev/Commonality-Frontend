@@ -16,6 +16,11 @@
 		A1FE096423A80E2B00FE5B04 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A1FE096223A80E2B00FE5B04 /* LaunchScreen.storyboard */; };
 		A1FE096C23A81B4300FE5B04 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1FE096B23A81B4300FE5B04 /* LoginViewController.swift */; };
 		A1FE096E23A81BE100FE5B04 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1FE096D23A81BE100FE5B04 /* Extensions.swift */; };
+		A1FE097123A8358A00FE5B04 /* Network.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1FE097023A8358A00FE5B04 /* Network.swift */; };
+		A1FE097323A8693A00FE5B04 /* SignUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1FE097223A8693A00FE5B04 /* SignUpViewController.swift */; };
+		A1FE097523A889AC00FE5B04 /* SessionCheckViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1FE097423A889AC00FE5B04 /* SessionCheckViewController.swift */; };
+		A1FE097723A88B6B00FE5B04 /* SessionLogin.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1FE097623A88B6B00FE5B04 /* SessionLogin.swift */; };
+		A1FE097923A8BA2200FE5B04 /* NameSelectViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1FE097823A8BA2200FE5B04 /* NameSelectViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -30,6 +35,11 @@
 		A1FE096523A80E2B00FE5B04 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		A1FE096B23A81B4300FE5B04 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		A1FE096D23A81BE100FE5B04 /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
+		A1FE097023A8358A00FE5B04 /* Network.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Network.swift; sourceTree = "<group>"; };
+		A1FE097223A8693A00FE5B04 /* SignUpViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpViewController.swift; sourceTree = "<group>"; };
+		A1FE097423A889AC00FE5B04 /* SessionCheckViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionCheckViewController.swift; sourceTree = "<group>"; };
+		A1FE097623A88B6B00FE5B04 /* SessionLogin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionLogin.swift; sourceTree = "<group>"; };
+		A1FE097823A8BA2200FE5B04 /* NameSelectViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NameSelectViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -62,10 +72,13 @@
 		A1FE095423A80E2700FE5B04 /* Commonality */ = {
 			isa = PBXGroup;
 			children = (
+				A1FE096F23A8355800FE5B04 /* Utilities */,
 				A1FE095523A80E2700FE5B04 /* AppDelegate.swift */,
 				A1FE095723A80E2700FE5B04 /* SceneDelegate.swift */,
+				A1FE097423A889AC00FE5B04 /* SessionCheckViewController.swift */,
 				A1FE096B23A81B4300FE5B04 /* LoginViewController.swift */,
-				A1FE096D23A81BE100FE5B04 /* Extensions.swift */,
+				A1FE097223A8693A00FE5B04 /* SignUpViewController.swift */,
+				A1FE097823A8BA2200FE5B04 /* NameSelectViewController.swift */,
 				A1FE095923A80E2700FE5B04 /* FirstViewController.swift */,
 				A1FE095B23A80E2700FE5B04 /* SecondViewController.swift */,
 				A1FE095D23A80E2700FE5B04 /* Main.storyboard */,
@@ -74,6 +87,16 @@
 				A1FE096523A80E2B00FE5B04 /* Info.plist */,
 			);
 			path = Commonality;
+			sourceTree = "<group>";
+		};
+		A1FE096F23A8355800FE5B04 /* Utilities */ = {
+			isa = PBXGroup;
+			children = (
+				A1FE096D23A81BE100FE5B04 /* Extensions.swift */,
+				A1FE097023A8358A00FE5B04 /* Network.swift */,
+				A1FE097623A88B6B00FE5B04 /* SessionLogin.swift */,
+			);
+			path = Utilities;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -149,10 +172,15 @@
 			files = (
 				A1FE095C23A80E2700FE5B04 /* SecondViewController.swift in Sources */,
 				A1FE096E23A81BE100FE5B04 /* Extensions.swift in Sources */,
+				A1FE097323A8693A00FE5B04 /* SignUpViewController.swift in Sources */,
 				A1FE095A23A80E2700FE5B04 /* FirstViewController.swift in Sources */,
+				A1FE097723A88B6B00FE5B04 /* SessionLogin.swift in Sources */,
 				A1FE095623A80E2700FE5B04 /* AppDelegate.swift in Sources */,
+				A1FE097923A8BA2200FE5B04 /* NameSelectViewController.swift in Sources */,
 				A1FE096C23A81B4300FE5B04 /* LoginViewController.swift in Sources */,
+				A1FE097123A8358A00FE5B04 /* Network.swift in Sources */,
 				A1FE095823A80E2700FE5B04 /* SceneDelegate.swift in Sources */,
+				A1FE097523A889AC00FE5B04 /* SessionCheckViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
