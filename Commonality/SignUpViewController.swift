@@ -56,7 +56,7 @@ class SignUpViewController: UIViewController, UITextFieldDelegate {
             self.signUpButton.loadingIndicator(true, "");
             let params = ["email": emailText.trim(), "password": firstPass] as Dictionary<String, String>
 
-            var request = URLRequest(url: URL(string: "http://192.168.1.195:3313/twitter/api/users/register")!)
+            var request = URLRequest(url: URL(string: baseUrl + "users/register")!)
             request.httpMethod = "POST"
             request.httpBody = try? JSONSerialization.data(withJSONObject: params, options: [])
             request.addValue("application/json", forHTTPHeaderField: "Content-Type")

@@ -47,7 +47,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
             
             let params = ["email": usernameText.trim(), "password": passText] as Dictionary<String, String>
 
-            var request = URLRequest(url: URL(string: "http://192.168.1.195:3313/twitter/api/users/login")!)
+            var request = URLRequest(url: URL(string: baseUrl + "users/login")!)
             request.httpMethod = "POST"
             request.httpBody = try? JSONSerialization.data(withJSONObject: params, options: [])
             request.addValue("application/json", forHTTPHeaderField: "Content-Type")

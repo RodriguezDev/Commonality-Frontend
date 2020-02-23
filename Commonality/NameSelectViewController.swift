@@ -8,7 +8,7 @@
 
 import UIKit
 
-class NameSelectViewController: UIViewController {
+class NameSelectViewController: UIViewController, UITextFieldDelegate {
     
     @IBOutlet weak var nameTextField: UITextField!
     @IBOutlet weak var continueButton: UIButton!
@@ -41,5 +41,7 @@ class NameSelectViewController: UIViewController {
 
         nameTextField.setBottomBorder()
         continueButton.applyDesign()
+        
+        nameTextField.delegate = self
     }
 }

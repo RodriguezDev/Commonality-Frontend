@@ -23,7 +23,7 @@ class SessionCheckViewController: UIViewController {
             print(sessionID)
             print(email)
             
-            getRequest(url: "http://192.168.1.195:3313/twitter/api/users/sessionValid") { (d: Dictionary<String, AnyObject>) in
+            getRequest(url: baseUrl + "users/sessionValid") { (d: Dictionary<String, AnyObject>) in
                 DispatchQueue.main.async(){
                     if (d["resultCode"]! as! Int == 130) {
                         print("Logged in.")

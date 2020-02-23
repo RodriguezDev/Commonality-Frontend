@@ -8,7 +8,8 @@
 
 import Foundation
 
-let baseUrl = "http://192.168.1.195:3313/twitter/api/"
+
+let baseUrl = "http://192.168.86.26:3313/twitter/api/"
 
 func postRequest(url: String, params: Dictionary<String, String>, closure: @escaping (_ json: Dictionary<String, AnyObject>) -> ()) {
     let defaults = UserDefaults.standard
