@@ -3,11 +3,13 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 51;
 	objects = {
 
 /* Begin PBXBuildFile section */
 		78B1C459513EF5C9A54F13A6 /* Pods_Commonality.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 258DCDEEE02EA7C0547CB910 /* Pods_Commonality.framework */; };
+		A1EB122C240319A800F96D95 /* CommunityListTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1EB122B240319A800F96D95 /* CommunityListTableViewCell.swift */; };
+		A1EB122F2403245700F96D95 /* CommunityModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1EB122E2403245700F96D95 /* CommunityModels.swift */; };
 		A1FE095623A80E2700FE5B04 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1FE095523A80E2700FE5B04 /* AppDelegate.swift */; };
 		A1FE095823A80E2700FE5B04 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1FE095723A80E2700FE5B04 /* SceneDelegate.swift */; };
 		A1FE095A23A80E2700FE5B04 /* FirstViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1FE095923A80E2700FE5B04 /* FirstViewController.swift */; };
@@ -26,6 +28,8 @@
 
 /* Begin PBXFileReference section */
 		258DCDEEE02EA7C0547CB910 /* Pods_Commonality.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Commonality.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		A1EB122B240319A800F96D95 /* CommunityListTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommunityListTableViewCell.swift; sourceTree = "<group>"; };
+		A1EB122E2403245700F96D95 /* CommunityModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommunityModels.swift; sourceTree = "<group>"; };
 		A1FE095223A80E2700FE5B04 /* Commonality.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Commonality.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A1FE095523A80E2700FE5B04 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		A1FE095723A80E2700FE5B04 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -72,8 +76,15 @@
 				FEE7BB7575C33D00EAE4E014 /* Pods-Commonality.debug.xcconfig */,
 				DC6A00E8D594E40120B74CF0 /* Pods-Commonality.release.xcconfig */,
 			);
-			name = Pods;
 			path = Pods;
+			sourceTree = "<group>";
+		};
+		A1EB122D2403244400F96D95 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				A1EB122E2403245700F96D95 /* CommunityModels.swift */,
+			);
+			path = Models;
 			sourceTree = "<group>";
 		};
 		A1FE094923A80E2700FE5B04 = {
@@ -97,6 +108,7 @@
 		A1FE095423A80E2700FE5B04 /* Commonality */ = {
 			isa = PBXGroup;
 			children = (
+				A1EB122D2403244400F96D95 /* Models */,
 				A1FE096F23A8355800FE5B04 /* Utilities */,
 				A1FE095523A80E2700FE5B04 /* AppDelegate.swift */,
 				A1FE095723A80E2700FE5B04 /* SceneDelegate.swift */,
@@ -106,6 +118,7 @@
 				A1FE097823A8BA2200FE5B04 /* NameSelectViewController.swift */,
 				A1FE095923A80E2700FE5B04 /* FirstViewController.swift */,
 				A1FE095B23A80E2700FE5B04 /* SecondViewController.swift */,
+				A1EB122B240319A800F96D95 /* CommunityListTableViewCell.swift */,
 				A1FE095D23A80E2700FE5B04 /* Main.storyboard */,
 				A1FE096023A80E2B00FE5B04 /* Assets.xcassets */,
 				A1FE096223A80E2B00FE5B04 /* LaunchScreen.storyboard */,
@@ -240,6 +253,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				A1FE095C23A80E2700FE5B04 /* SecondViewController.swift in Sources */,
+				A1EB122F2403245700F96D95 /* CommunityModels.swift in Sources */,
 				A1FE096E23A81BE100FE5B04 /* Extensions.swift in Sources */,
 				A1FE097323A8693A00FE5B04 /* SignUpViewController.swift in Sources */,
 				A1FE095A23A80E2700FE5B04 /* FirstViewController.swift in Sources */,
@@ -249,6 +263,7 @@
 				A1FE096C23A81B4300FE5B04 /* LoginViewController.swift in Sources */,
 				A1FE097123A8358A00FE5B04 /* Network.swift in Sources */,
 				A1FE095823A80E2700FE5B04 /* SceneDelegate.swift in Sources */,
+				A1EB122C240319A800F96D95 /* CommunityListTableViewCell.swift in Sources */,
 				A1FE097523A889AC00FE5B04 /* SessionCheckViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

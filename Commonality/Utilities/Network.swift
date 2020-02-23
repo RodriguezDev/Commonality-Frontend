@@ -11,6 +11,10 @@ import Foundation
 
 let baseUrl = "http://192.168.86.26:3313/twitter/api/"
 
+/*
+ * Methods below are deprecated...
+ *
+ 
 func postRequest(url: String, params: Dictionary<String, String>, closure: @escaping (_ json: Dictionary<String, AnyObject>) -> ()) {
     let defaults = UserDefaults.standard
     
@@ -67,3 +71,4 @@ func getRequest(url: String, closure: @escaping (_ json: Dictionary<String, AnyO
 
     task.resume()
 }
+*/

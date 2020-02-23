@@ -133,33 +133,54 @@ class ImagePickerManager: NSObject, UIImagePickerControllerDelegate, UINavigatio
         picker.dismiss(animated: true, completion: nil)
     }
     
-    // TODO: fix this.
-    /*
-    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
-        picker.dismiss(animated: true, completion: nil)
-        let image = info[UIImagePickerControllerOriginalImage] as! UIImage
-        pickImageCallback?(image)
-    }
-    */
-    
-    //  // For Swift 4.2
-    //  func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
-    //      picker.dismiss(animated: true, completion: nil)
-    //      guard let image = info[.originalImage] as? UIImage else {
-    //          fatalError("Expected a dictionary containing an image, but was provided the following: \(info)")
-    //      }
-    //      pickImageCallback?(image)
-    //  }
-    
     @objc func imagePickerController(_ picker: UIImagePickerController, pickedImage: UIImage?) {
     }
-    
-    
-    
 }
 
 func showAlert(title: String, message: String, view: UIViewController) {
     let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
     alert.addAction(UIAlertAction(title: "Okay", style: .default, handler: nil))
     view.present(alert, animated: true, completion: nil)
+}
+
+extension UIColor {
+    
+    convenience init(red: Int, green: Int, blue: Int) {
+        self.init(red: CGFloat(red) / 255, green: CGFloat(green) / 255, blue: CGFloat(blue) / 255, alpha: 1)
+    }
+    
+    static var red: UIColor {
+        return UIColor(red: 255, green: 59, blue: 48)
+    }
+    
+    static var orange: UIColor {
+        return UIColor(red: 255, green: 149, blue: 0)
+    }
+    
+    static var yellow: UIColor {
+        return UIColor(red: 255, green: 204, blue: 0)
+    }
+    
+    static var green: UIColor {
+        return UIColor(red: 76, green: 217, blue: 100)
+    }
+    
+    static var tealBlue: UIColor {
+        return UIColor(red: 90, green: 200, blue: 250)
+    }
+    
+    static var blue: UIColor {
+        return UIColor(red: 0, green: 122, blue: 255)
+    }
+    
+    static var purple: UIColor {
+        return UIColor(red: 88, green: 86, blue: 214)
+    }
+    
+    static var pink: UIColor {
+        return UIColor(red: 255, green: 45, blue: 85)
+    }
+    
+    static let colors: [UIColor] = [.red, .orange, .yellow, .green, .tealBlue, .blue, .purple, .pink]
+    
 }
