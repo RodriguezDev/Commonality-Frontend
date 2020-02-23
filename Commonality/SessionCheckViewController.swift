@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Alamofire
 
 class SessionCheckViewController: UIViewController {
 
@@ -23,17 +24,29 @@ class SessionCheckViewController: UIViewController {
             print(sessionID)
             print(email)
             
-            getRequest(url: baseUrl + "users/sessionValid") { (d: Dictionary<String, AnyObject>) in
-                DispatchQueue.main.async(){
-                    if (d["resultCode"]! as! Int == 130) {
-                        print("Logged in.")
-                        self.performSegue(withIdentifier: "loggedIn", sender: self)
-                    } else {
-                        print("Not logged in.")
-                        self.performSegue(withIdentifier: "notLoggedIn", sender: self)
+            let headers: HTTPHeaders = [
+                "email": defaults.string(forKey: defaultsKeys.userEmail)!,
+                "sessionID": defaults.string(forKey: defaultsKeys.sessionID)!
+            ]
+            
+            AF.request(baseUrl + "users/sessionValid", method: .get, headers: headers).responseJSON { response in
+                switch (response.result) {
+                case .success:
+                    if let result = response.value {
+                        let JSON = result as! NSDictionary
+                        print(JSON)
+    
+                        // Perform the correct segue based on if the user is logged in or not.
+                        let segue = JSON["resultCode"]! as! Int == 130 ? "loggedIn" : "notLoggedIn"
+                        self.performSegue(withIdentifier: segue, sender: self)
                     }
+                    
+                case .failure(let error):
+                    print(error.localizedDescription)
+                    self.performSegue(withIdentifier: "notLoggedIn", sender: self)
                 }
             }
+            
         } else {
             print("No Credentials saved.")
             self.performSegue(withIdentifier: "notLoggedIn", sender: self)

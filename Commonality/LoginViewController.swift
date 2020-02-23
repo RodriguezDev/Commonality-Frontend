@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Alamofire
 
 class LoginViewController: UIViewController, UITextFieldDelegate {
     
@@ -41,60 +42,49 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
 
     func attemptLogin() {
         // Only send request if there's something in the text fields.
-        if let usernameText = emailTextField.text, !usernameText.isEmpty, let passText = passwordTextField.text, !passText.isEmpty {
+        if let emailText = emailTextField.text, !emailText.isEmpty, let passText = passwordTextField.text, !passText.isEmpty {
             
             self.loginButton.loadingIndicator(true, "");
             
-            let params = ["email": usernameText.trim(), "password": passText] as Dictionary<String, String>
+            let parameters = ["email": emailText.trim(), "password": passText] as Dictionary<String, String>
+            let headers: HTTPHeaders = ["Content-Type": "application/json"]
 
-            var request = URLRequest(url: URL(string: baseUrl + "users/login")!)
-            request.httpMethod = "POST"
-            request.httpBody = try? JSONSerialization.data(withJSONObject: params, options: [])
-            request.addValue("application/json", forHTTPHeaderField: "Content-Type")
-
-            let session = URLSession.shared
-            let task = session.dataTask(with: request, completionHandler: { data, response, error -> Void in
-                do {
-                    var json = try JSONSerialization.jsonObject(with: data!) as! Dictionary<String, AnyObject>
-                    json["email"] = usernameText as AnyObject
-                    
-                    let statusCode = json["resultCode"] as! Int
-                    switch statusCode {
-                    case 120:
-                        self.completion(json: json)
-                        break
-                    default:
-                        break;
+            // Send the request up. Woo.
+            AF.request(baseUrl + "users/login", method: .post, parameters: parameters, encoder: JSONParameterEncoder.default, headers: headers).responseJSON { response in
+                print(response)
+                
+                switch (response.result) {
+                case .success:
+                    if let result = response.value {
+                        let JSON = result as! NSDictionary
+                        print(JSON)
+    
+                        switch JSON["resultCode"]! as! Int {
+                        case 120:
+                            // Save the credentials for future authentication, and then segue.
+                            let defaults = UserDefaults.standard
+                            defaults.set(JSON["sessionID"] as! String, forKey: defaultsKeys.sessionID)
+                            defaults.set(emailText.trim(), forKey: defaultsKeys.userEmail)
+                            
+                            self.performSegue(withIdentifier: "loggedIn", sender: self)
+                            break
+                            
+                        default:
+                            self.loginButton.loadingIndicator(false, "Login")
+                            showAlert(title: "Oops...", message: JSON["message"] as! String, view: self)
+                        }
                     }
-                    self.errorHandler(message: json["message"] as! String)
-                } catch {
-                    self.errorHandler(message: "Unable to connect to server.")
-                    print("Error parsing JSON")
+                    
+                case .failure(let error):
+                    print(error.localizedDescription)
+                    self.loginButton.loadingIndicator(false, "Login")
+                    showAlert(title: "Oops...", message: "There was a server error.", view: self)
                 }
-            })
-
-            task.resume()
+            }
         } else {
             // One of the fields is empty.
-            showAlert(title: "Oops...", message: "Please fill out all fields.", view: self)
-        }
-    }
-    
-    func completion(json: Dictionary<String, AnyObject>) {
-        DispatchQueue.main.async(){
-            // Save the credentials for future authentication.
-            let defaults = UserDefaults.standard
-            defaults.set(json["sessionID"] as! String, forKey: defaultsKeys.sessionID)
-            defaults.set(json["email"] as! String, forKey: defaultsKeys.userEmail)
-            
-            self.performSegue(withIdentifier: "loggedIn", sender: self)
-        }
-    }
-    
-    func errorHandler(message: String) {
-        DispatchQueue.main.async(){
             self.loginButton.loadingIndicator(false, "Login")
-            showAlert(title: "Oops...", message: message, view: self)
+            showAlert(title: "Oops...", message: "Please fill out all fields.", view: self)
         }
     }
 }

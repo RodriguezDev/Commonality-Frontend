@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Alamofire
 
 class NameSelectViewController: UIViewController, UITextFieldDelegate {
     
@@ -18,19 +19,40 @@ class NameSelectViewController: UIViewController, UITextFieldDelegate {
         if let nameText = nameTextField.text?.trim(), !nameText.isEmpty {
         
             self.continueButton.loadingIndicator(true, "");
+            let defaults = UserDefaults.standard
             
-            let params = ["field": nameText] as Dictionary<String, String>
-            
-            postRequest(url: baseUrl + "users/setHandle", params: params) { (d: Dictionary<String, AnyObject>) in
-                if (d["resultCode"]! as! Int == 150) {
-                    DispatchQueue.main.async() {
-                        self.performSegue(withIdentifier: "signedUp", sender: self)
+            let parameters = ["field": nameText] as Dictionary<String, String>
+            let headers: HTTPHeaders = [
+                "Content-Type": "application/json",
+                "email": defaults.string(forKey: defaultsKeys.userEmail)!,
+                "sessionID": defaults.string(forKey: defaultsKeys.sessionID)!
+            ]
+
+            // Send the request up. Woo.
+            AF.request(baseUrl + "users/setHandle", method: .post, parameters: parameters, encoder: JSONParameterEncoder.default, headers: headers).responseJSON { response in
+                print(response)
+                
+                switch (response.result) {
+                case .success:
+                    if let result = response.value {
+                        let JSON = result as! NSDictionary
+                        print(JSON)
+    
+                        switch JSON["resultCode"]! as! Int {
+                        case 150:
+                            self.performSegue(withIdentifier: "signedUp", sender: self)
+                            break
+                            
+                        default:
+                            self.continueButton.loadingIndicator(false, "Continue")
+                            showAlert(title: "Oops...", message: JSON["message"]! as! String, view: self)
+                        }
                     }
-                } else {
-                    DispatchQueue.main.async() {
-                        self.continueButton.loadingIndicator(false, "Continue")
-                        showAlert(title: "Oops...", message: d["message"]! as! String, view: self)
-                    }
+                    
+                case .failure(let error):
+                    print(error.localizedDescription)
+                    self.continueButton.loadingIndicator(false, "Continue")
+                    showAlert(title: "Oops...", message: "There was a server error.", view: self)
                 }
             }
         }

@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Alamofire
 
 class SignUpViewController: UIViewController, UITextFieldDelegate {
     
@@ -54,51 +55,44 @@ class SignUpViewController: UIViewController, UITextFieldDelegate {
             
             // Attempt the sign up.
             self.signUpButton.loadingIndicator(true, "");
-            let params = ["email": emailText.trim(), "password": firstPass] as Dictionary<String, String>
+            let parameters = ["email": emailText.trim(), "password": firstPass] as Dictionary<String, String>
+            let headers: HTTPHeaders = ["Content-Type": "application/json"]
 
-            var request = URLRequest(url: URL(string: baseUrl + "users/register")!)
-            request.httpMethod = "POST"
-            request.httpBody = try? JSONSerialization.data(withJSONObject: params, options: [])
-            request.addValue("application/json", forHTTPHeaderField: "Content-Type")
-
-            let session = URLSession.shared
-            let task = session.dataTask(with: request, completionHandler: { data, response, error -> Void in
-                do {
-                    let json = try JSONSerialization.jsonObject(with: data!) as! Dictionary<String, AnyObject>
-                    let statusCode = json["resultCode"] as! Int
-                    switch statusCode {
-                    case 110:
-                        self.completion(json: json)
-                        break
-                    default:
-                        break;
+            // Send the request up. Woo.
+            AF.request(baseUrl + "users/register", method: .post, parameters: parameters, encoder: JSONParameterEncoder.default, headers: headers).responseJSON { response in
+                print(response)
+                
+                switch (response.result) {
+                case .success:
+                    if let result = response.value {
+                        let JSON = result as! NSDictionary
+                        print(JSON)
+    
+                        switch JSON["resultCode"]! as! Int {
+                        case 110:
+                            // Save the credentials for future authentication, and then segue.
+                            let defaults = UserDefaults.standard
+                            defaults.set(JSON["sessionID"] as! String, forKey: defaultsKeys.sessionID)
+                            defaults.set(emailText.trim(), forKey: defaultsKeys.userEmail)
+                            
+                            self.performSegue(withIdentifier: "toUsernameSelection", sender: self)
+                            break
+                            
+                        default:
+                            self.signUpButton.loadingIndicator(false, "Sign Up")
+                            showAlert(title: "Oops...", message: JSON["message"] as! String, view: self)
+                        }
                     }
-                    self.errorHandler(message: json["message"] as! String)
-                } catch {
-                    self.errorHandler(message: "Unable to connect to server.")
-                    print("Error parsing JSON")
+                    
+                case .failure(let error):
+                    print(error.localizedDescription)
+                    self.signUpButton.loadingIndicator(false, "Sign Up")
+                    showAlert(title: "Oops...", message: "There was a server error.", view: self)
                 }
-            })
-
-            task.resume()
+            }
         } else {
             // One of the fields is empty.
             showAlert(title: "Oops...", message: "Please fill out all fields.", view: self)
-        }
-    }
-    
-    // If successful signup.
-    func completion(json: Dictionary<String, AnyObject>) {
-        DispatchQueue.main.async(){
-           self.performSegue(withIdentifier: "toUsernameSelection", sender: self)
-        }
-    }
-    
-    // If signup is unsuccessful.
-    func errorHandler(message: String) {
-        DispatchQueue.main.async(){
-            self.signUpButton.loadingIndicator(false,  "Sign Up")
-            showAlert(title: "Oops...", message: message, view: self)
         }
     }
 }
