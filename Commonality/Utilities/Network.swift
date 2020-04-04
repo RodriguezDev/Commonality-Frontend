@@ -9,7 +9,7 @@
 import Foundation
 
 
-let baseUrl = "http://192.168.86.26:3313/twitter/api/"
+let baseUrl = "http://192.168.86.24:3313/twitter/api/"
 
 /*
  * Methods below are deprecated...

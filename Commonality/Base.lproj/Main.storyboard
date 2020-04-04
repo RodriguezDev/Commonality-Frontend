@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15702" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="HLg-Bw-uNI">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15705" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="HLg-Bw-uNI">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15704"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15706"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -58,7 +58,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="1gG-OL-bpz">
-                                <rect key="frame" x="0.0" y="145.5" width="414" height="667.5"/>
+                                <rect key="frame" x="0.0" y="213.5" width="414" height="599.5"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="communityListCell" id="YdS-bZ-Qp7" customClass="CommunityListTableViewCell" customModule="Commonality" customModuleProvider="target">
@@ -102,23 +102,67 @@
                                     </tableViewCell>
                                 </prototypes>
                             </tableView>
-                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Search" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="KjH-Fp-SV3">
-                                <rect key="frame" x="20" y="93.5" width="374" height="34"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits"/>
-                            </textField>
+                            <stackView opaque="NO" contentMode="scaleToFill" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="mjc-3S-F9h" userLabel="Search Stack View">
+                                <rect key="frame" x="20" y="95.5" width="374" height="18"/>
+                                <subviews>
+                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="graySearchIcon" translatesAutoresizingMaskIntoConstraints="NO" id="zcy-8S-cAZ">
+                                        <rect key="frame" x="0.0" y="0.0" width="18" height="18"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="18" id="7wb-BQ-s8v"/>
+                                            <constraint firstAttribute="width" constant="18" id="B4r-rC-RVC"/>
+                                        </constraints>
+                                    </imageView>
+                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Find a commonality" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="KjH-Fp-SV3">
+                                        <rect key="frame" x="28" y="0.0" width="346" height="18"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <textInputTraits key="textInputTraits"/>
+                                    </textField>
+                                </subviews>
+                            </stackView>
+                            <stackView opaque="NO" contentMode="scaleToFill" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="Qno-ND-Gq9" userLabel="Create Stack View">
+                                <rect key="frame" x="20" y="138.5" width="218" height="50"/>
+                                <subviews>
+                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="plusIcon" translatesAutoresizingMaskIntoConstraints="NO" id="jfN-aR-Vav">
+                                        <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="50" id="GnH-OC-cjI"/>
+                                            <constraint firstAttribute="height" constant="50" id="riw-tm-Phr"/>
+                                        </constraints>
+                                    </imageView>
+                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="we3-Q2-Y24">
+                                        <rect key="frame" x="55" y="0.0" width="163" height="50"/>
+                                        <subviews>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nV8-OS-8Lg">
+                                                <rect key="frame" x="0.0" y="0.0" width="163" height="35.5"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="18"/>
+                                                <state key="normal" title="Create commonality">
+                                                    <color key="titleColor" name="ButtonColor"/>
+                                                </state>
+                                            </button>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Start something cool" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VPG-af-Ywh">
+                                                <rect key="frame" x="0.0" y="35.5" width="163" height="14.5"/>
+                                                <fontDescription key="fontDescription" type="system" weight="light" pointSize="12"/>
+                                                <color key="textColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                        </subviews>
+                                    </stackView>
+                                </subviews>
+                            </stackView>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <constraints>
-                            <constraint firstItem="1gG-OL-bpz" firstAttribute="top" secondItem="KjH-Fp-SV3" secondAttribute="bottom" constant="18" id="LjK-oo-4o5"/>
+                            <constraint firstItem="mjc-3S-F9h" firstAttribute="top" secondItem="wz4-LY-Yn1" secondAttribute="bottom" constant="20" id="B5I-vp-gzg"/>
+                            <constraint firstItem="O1u-W8-tvY" firstAttribute="trailing" secondItem="mjc-3S-F9h" secondAttribute="trailing" constant="20" id="Haf-Fl-nnO"/>
+                            <constraint firstItem="Qno-ND-Gq9" firstAttribute="leading" secondItem="O1u-W8-tvY" secondAttribute="leading" constant="20" id="Icf-0e-ZPB"/>
+                            <constraint firstItem="mjc-3S-F9h" firstAttribute="leading" secondItem="O1u-W8-tvY" secondAttribute="leading" constant="20" id="SlE-NY-7ka"/>
                             <constraint firstItem="wz4-LY-Yn1" firstAttribute="leading" secondItem="O1u-W8-tvY" secondAttribute="leading" constant="20" id="Sol-mG-Lfy"/>
                             <constraint firstItem="1gG-OL-bpz" firstAttribute="trailing" secondItem="O1u-W8-tvY" secondAttribute="trailing" id="TP7-jj-a85"/>
+                            <constraint firstItem="Qno-ND-Gq9" firstAttribute="top" secondItem="mjc-3S-F9h" secondAttribute="bottom" constant="25" id="ZVA-Yi-JSt"/>
                             <constraint firstItem="wz4-LY-Yn1" firstAttribute="top" secondItem="O1u-W8-tvY" secondAttribute="top" constant="12" id="aTk-kI-HXf"/>
                             <constraint firstItem="1gG-OL-bpz" firstAttribute="bottom" secondItem="O1u-W8-tvY" secondAttribute="bottom" id="cQJ-bw-LcA"/>
-                            <constraint firstItem="KjH-Fp-SV3" firstAttribute="top" secondItem="wz4-LY-Yn1" secondAttribute="bottom" constant="18" id="cXe-q0-Hja"/>
-                            <constraint firstItem="O1u-W8-tvY" firstAttribute="trailing" secondItem="KjH-Fp-SV3" secondAttribute="trailing" constant="20" id="ddm-VH-tqU"/>
-                            <constraint firstItem="KjH-Fp-SV3" firstAttribute="leading" secondItem="O1u-W8-tvY" secondAttribute="leading" constant="20" id="eGH-uC-e5W"/>
                             <constraint firstItem="1gG-OL-bpz" firstAttribute="leading" secondItem="O1u-W8-tvY" secondAttribute="leading" id="nfc-gP-awo"/>
+                            <constraint firstItem="1gG-OL-bpz" firstAttribute="top" secondItem="Qno-ND-Gq9" secondAttribute="bottom" constant="25" id="z9B-TC-dSE"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="O1u-W8-tvY"/>
                     </view>
@@ -454,7 +498,9 @@
     <resources>
         <image name="emailIcon" width="512" height="512"/>
         <image name="first" width="30" height="30"/>
+        <image name="graySearchIcon" width="394" height="393"/>
         <image name="passwordIcon" width="512" height="512"/>
+        <image name="plusIcon" width="100" height="100"/>
         <image name="second" width="30" height="30"/>
         <namedColor name="ButtonColor">
             <color red="0.26100000739097595" green="0.26100000739097595" blue="0.26100000739097595" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>

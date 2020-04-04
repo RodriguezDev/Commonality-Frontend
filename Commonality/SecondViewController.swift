@@ -15,6 +15,8 @@ class SecondViewController: UIViewController, UITableViewDelegate, UITableViewDa
     @IBOutlet weak var searchBoxOutlet: UITextField!
     @IBOutlet weak var communitiesList: UITableView!
     
+    var topCommunities: CommunityResponse?
+        
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -22,6 +24,8 @@ class SecondViewController: UIViewController, UITableViewDelegate, UITableViewDa
         self.communitiesList.delegate = self
         self.communitiesList.dataSource = self
         self.communitiesList.allowsSelection = false
+        
+        self.searchBoxOutlet.setBottomBorder()
         
         reloadTopCommunities()
     }
@@ -40,7 +44,8 @@ class SecondViewController: UIViewController, UITableViewDelegate, UITableViewDa
                 case .success:
                     if let result = response.value {
                         let JSON = result as! NSDictionary
-                        print(JSON)
+                        self.topCommunities = parseCommunityResponse(JSON: JSON)
+                        self.communitiesList.reloadData()
                     }
                 case .failure(let error):
                     print(error.localizedDescription)
@@ -56,18 +61,34 @@ class SecondViewController: UIViewController, UITableViewDelegate, UITableViewDa
     
     func tableView(_ tableView: UITableView, titleForHeaderInSection
                                 section: Int) -> String? {
-        return section == 0 ? "Top Communities" : "My Communities"
+        return section == 0 ? "Top communities" : "My communities"
+    }
+    
+    func tableView(_ tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
+        (view as! UITableViewHeaderFooterView).contentView.backgroundColor = UIColor.clear.withAlphaComponent(1)
+        (view as! UITableViewHeaderFooterView).textLabel?.textColor = UIColor.white
     }
 
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return section == 0 ? 5 : 10
+        switch section {
+        case 0:
+            return topCommunities != nil ? topCommunities!.communities.count : 0
+        default:
+            return 0
+        }
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell: CommunityListTableViewCell = tableView.dequeueReusableCell(withIdentifier: "communityListCell", for: indexPath) as! CommunityListTableViewCell
         
-        cell.communityTitleLabel.text = "CommunityName"
+        var communities: [Community]!
+        
+        if (indexPath.section == 0 && topCommunities != nil) {
+            communities = topCommunities!.communities
+        }
+        
+        cell.communityTitleLabel.text = communities[indexPath.row].name
         cell.colorCircleView.backgroundColor = UIColor.colors[indexPath.row % UIColor.colors.count]
         cell.colorCircleView.layer.cornerRadius = cell.colorCircleView.frame.height / 2
         cell.colorCircleView.alpha = 0.75
